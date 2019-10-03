@@ -1,17 +1,31 @@
 package com.example.uv_today_android.Views
 
+import android.app.ProgressDialog
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import com.example.uv_today_android.Presenters.UVPresenter
+import com.example.uv_today_android.Presenters.UVPresenterImpl
 import com.example.uv_today_android.Presenters.UVView
 import com.example.uv_today_android.R
+import com.example.uv_today_android.Services.LocationServiceImpl
+import com.google.android.gms.location.LocationServices
 
 class MainActivity : AppCompatActivity(), UVView {
+
+    private lateinit var presenter: UVPresenter
+    private var dialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         this.setupUI()
+
+        this.presenter = UVPresenterImpl(LocationServiceImpl(LocationServices.getFusedLocationProviderClient(this), this))
+        this.presenter.setView(this)
     }
 
     private fun setupUI() {
@@ -19,11 +33,30 @@ class MainActivity : AppCompatActivity(), UVView {
     }
 
     override fun onShowLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.dialog?.hide()
+        this.dialog = ProgressDialog.show(this, "Loading", "Retrieving your position")
     }
 
     override fun onHideLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.dialog?.hide()
+
     }
 
+    override fun onFailToUpdateLocation() {
+        Toast.makeText(this.applicationContext, "Could not retrieve your position", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
+                                            grantResults: IntArray) {
+        if (requestCode == 1) {
+            when {
+                grantResults.isEmpty() -> Log.i("uv-today", "User interaction was cancelled.")
+                grantResults[0] == PackageManager.PERMISSION_GRANTED -> this.presenter.getLocation()
+                else -> {
+                    Toast.makeText(this.applicationContext, "The permission to use your location was not given", Toast.LENGTH_LONG).show()
+                    Log.e("uv-today", "User refused location")
+                }
+            }
+        }
+    }
 }
