@@ -2,6 +2,7 @@ package com.example.uv_today_android.Services
 
 import android.location.Location
 import android.util.Log
+import com.example.uv_today_android.BuildConfig
 import com.example.uv_today_android.Models.DataModel.Index
 import com.example.uv_today_android.Models.DataModel.ServiceModels.ForecastObjectResponse
 import retrofit2.Call
@@ -24,7 +25,7 @@ class UVServiceImpl: UVService {
             .build()
 
         val service = retrofit.create(GetUVApi::class.java)
-        val call = service.getUVIndex("API_KEY", location.latitude, location.longitude)
+        val call = service.getUVIndex(BuildConfig.DarkSkyApiKey, location.latitude, location.longitude)
 
         call.enqueue(object : Callback<ForecastObjectResponse> {
             override fun onFailure(call: Call<ForecastObjectResponse>, t: Throwable) {
