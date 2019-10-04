@@ -3,10 +3,15 @@ package com.example.uv_today_android.Services
 import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
+import java.io.IOException
+import java.util.*
 
 interface LocationServiceDelegate {
     fun didUpdateLocation(latitude: Double, longitude: Double, city: String)
@@ -15,7 +20,7 @@ interface LocationServiceDelegate {
 
 interface LocationService {
     fun setDelegate(delegate: LocationServiceDelegate)
-    fun retriveLocation()
+    fun retrieveLocation()
 }
 
 class LocationServiceImpl(
@@ -29,21 +34,37 @@ class LocationServiceImpl(
         this.delegate = delegate
     }
 
-    override fun retriveLocation() {
+    override fun retrieveLocation() {
         if (!this.checkPermissions()) {
             ActivityCompat.requestPermissions(this.activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
         } else {
             this.locationClient.lastLocation.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     task.result?.let {
-                        this.delegate?.didUpdateLocation(it.latitude, it.longitude, "City to update")
-                        Log.i("uv-today", "Location is : ${it.latitude}, ${it.longitude}")
+                        this.delegate?.didUpdateLocation(it.latitude, it.longitude, this.findCityFromLocation(it))
                     }
                 } else {
                     this.delegate?.didFailUpdateLocation()
                 }
             }
         }
+    }
+
+    private fun findCityFromLocation(location: Location): String {
+        val geocoder = Geocoder(this.activity.applicationContext, Locale.getDefault())
+        val addresses: List<Address>
+
+        try {
+            addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+        } catch (ioException: IOException) {
+            return "Unknown"
+        }
+
+        if (addresses.isNotEmpty()) {
+            return addresses[0].locality
+        }
+
+        return "Unknown"
     }
 
     private fun checkPermissions(): Boolean {

@@ -7,7 +7,8 @@ interface UVView {
     fun onShowLoading()
     fun onHideLoading()
 
-    fun onFailToUpdateLocation()
+    fun onUpdateLocationWithSuccess(cityName: String)
+    fun onUpdateLocationWithError()
 }
 
 interface UVPresenter {
@@ -30,16 +31,17 @@ class UVPresenterImpl(
 
     override fun getLocation() {
         this.view?.onShowLoading()
-        this.locationService.retriveLocation()
+        this.locationService.retrieveLocation()
     }
 
     override fun didUpdateLocation(latitude: Double, longitude: Double, city: String) {
         this.view?.onHideLoading()
+        this.view?.onUpdateLocationWithSuccess(city)
     }
 
     override fun didFailUpdateLocation() {
         this.view?.onHideLoading()
-        this.view?.onFailToUpdateLocation()
+        this.view?.onUpdateLocationWithError()
     }
 
 }

@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.TextView
 import android.widget.Toast
 import com.example.uv_today_android.Presenters.UVPresenter
 import com.example.uv_today_android.Presenters.UVPresenterImpl
@@ -14,6 +15,8 @@ import com.example.uv_today_android.Services.LocationServiceImpl
 import com.google.android.gms.location.LocationServices
 
 class MainActivity : AppCompatActivity(), UVView {
+
+    private lateinit var cityTextView: TextView
 
     private lateinit var presenter: UVPresenter
     private var dialog: ProgressDialog? = null
@@ -30,6 +33,8 @@ class MainActivity : AppCompatActivity(), UVView {
 
     private fun setupUI() {
         this.supportActionBar?.hide()
+
+        this.cityTextView = this.findViewById(R.id.city_textview)
     }
 
     override fun onShowLoading() {
@@ -39,10 +44,13 @@ class MainActivity : AppCompatActivity(), UVView {
 
     override fun onHideLoading() {
         this.dialog?.hide()
-
     }
 
-    override fun onFailToUpdateLocation() {
+    override fun onUpdateLocationWithSuccess(cityName: String) {
+        this.cityTextView.text = "Ville : $cityName"
+    }
+
+    override fun onUpdateLocationWithError() {
         Toast.makeText(this.applicationContext, "Could not retrieve your position", Toast.LENGTH_LONG).show()
     }
 
