@@ -12,6 +12,7 @@ import com.example.uv_today_android.Presenters.UVPresenterImpl
 import com.example.uv_today_android.Presenters.UVView
 import com.example.uv_today_android.R
 import com.example.uv_today_android.Services.LocationServiceImpl
+import com.example.uv_today_android.Services.UVServiceImpl
 import com.google.android.gms.location.LocationServices
 
 class MainActivity : AppCompatActivity(), UVView {
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity(), UVView {
 
         this.setupUI()
 
-        this.presenter = UVPresenterImpl(LocationServiceImpl(LocationServices.getFusedLocationProviderClient(this), this))
+        this.presenter = UVPresenterImpl(LocationServiceImpl(LocationServices.getFusedLocationProviderClient(this), this), UVServiceImpl())
         this.presenter.setView(this)
     }
 
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity(), UVView {
         if (requestCode == 1) {
             when {
                 grantResults.isEmpty() -> Log.i("uv-today", "User interaction was cancelled.")
-                grantResults[0] == PackageManager.PERMISSION_GRANTED -> this.presenter.getLocation()
+                grantResults[0] == PackageManager.PERMISSION_GRANTED -> this.presenter.searchLocation()
                 else -> {
                     Toast.makeText(this.applicationContext, "The permission to use your location was not given", Toast.LENGTH_LONG).show()
                     Log.e("uv-today", "User refused location")

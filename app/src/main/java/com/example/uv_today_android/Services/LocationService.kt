@@ -14,7 +14,7 @@ import java.io.IOException
 import java.util.*
 
 interface LocationServiceDelegate {
-    fun didUpdateLocation(latitude: Double, longitude: Double, city: String)
+    fun didUpdateLocation(location: Location, city: String)
     fun didFailUpdateLocation()
 }
 
@@ -41,7 +41,7 @@ class LocationServiceImpl(
             this.locationClient.lastLocation.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     task.result?.let {
-                        this.delegate?.didUpdateLocation(it.latitude, it.longitude, this.findCityFromLocation(it))
+                        this.delegate?.didUpdateLocation(it, this.findCityFromLocation(it))
                     }
                 } else {
                     this.delegate?.didFailUpdateLocation()
@@ -61,7 +61,7 @@ class LocationServiceImpl(
         }
 
         if (addresses.isNotEmpty()) {
-            return addresses[0].locality
+            return addresses[0].adminArea
         }
 
         return "Unknown"
