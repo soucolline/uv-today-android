@@ -2,6 +2,7 @@ package com.example.uv_today_android.Presenters
 
 import android.location.Location
 import android.util.Log
+import com.example.uv_today_android.Models.DataModel.Index
 import com.example.uv_today_android.Services.LocationService
 import com.example.uv_today_android.Services.LocationServiceDelegate
 import com.example.uv_today_android.Services.UVService
@@ -12,6 +13,9 @@ interface UVView {
 
     fun onUpdateLocationWithSuccess(cityName: String)
     fun onUpdateLocationWithError()
+
+    fun onReceiveSuccess(index: Index)
+    fun onReceiveError(error: String)
 }
 
 interface UVPresenter {
@@ -45,8 +49,10 @@ class UVPresenterImpl(
 
         this.uvService.getUVIndex(location, {
             this.view?.onHideLoading()
+            this.view?.onReceiveSuccess(it)
         }, {
             this.view?.onHideLoading()
+            this.view?.onReceiveError(it)
         })
     }
 

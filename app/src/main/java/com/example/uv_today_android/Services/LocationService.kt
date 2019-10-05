@@ -61,7 +61,7 @@ class LocationServiceImpl(
         }
 
         if (addresses.isNotEmpty()) {
-            return addresses[0].adminArea
+            return addresses[0].locality
         }
 
         return "Unknown"
