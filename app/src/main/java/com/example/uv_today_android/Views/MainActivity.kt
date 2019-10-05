@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import com.example.uv_today_android.Models.DataModel.Index
+import com.example.uv_today_android.Models.DataModel.getAssociatedDescriptionFromContext
 import com.example.uv_today_android.Presenters.UVPresenter
 import com.example.uv_today_android.Presenters.UVPresenterImpl
 import com.example.uv_today_android.Presenters.UVView
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity(), UVView {
 
     private lateinit var cityTextView: TextView
     private lateinit var uvTextView: TextView
+    private lateinit var uvDescription: TextView
 
     private lateinit var presenter: UVPresenter
     private var dialog: ProgressDialog? = null
@@ -39,6 +41,7 @@ class MainActivity : AppCompatActivity(), UVView {
 
         this.cityTextView = this.findViewById(R.id.city_textview)
         this.uvTextView = this.findViewById(R.id.uv_textview)
+        this.uvDescription = this.findViewById(R.id.uv_description)
     }
 
     override fun onShowLoading() {
@@ -60,6 +63,7 @@ class MainActivity : AppCompatActivity(), UVView {
 
     override fun onReceiveSuccess(index: Index) {
         this.uvTextView.text = index.toString()
+        this.uvDescription.text = index.getAssociatedDescriptionFromContext(this.applicationContext)
     }
 
     override fun onReceiveError(error: String) {

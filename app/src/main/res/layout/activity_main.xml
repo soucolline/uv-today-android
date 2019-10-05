@@ -45,7 +45,7 @@
         app:layout_constraintTop_toBottomOf="@+id/city_textview" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/uv_description"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
