@@ -20,13 +20,9 @@ import com.example.uv_today_android.Services.LocationServiceImpl
 import com.example.uv_today_android.Services.UVServiceImpl
 import com.google.android.gms.location.LocationServices
 import android.animation.ObjectAnimator
-import android.graphics.Color
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.view.WindowManager
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.toColor
 
 
 class MainActivity : AppCompatActivity(), UVView {
@@ -35,6 +31,7 @@ class MainActivity : AppCompatActivity(), UVView {
     private lateinit var cityTextView: TextView
     private lateinit var uvTextView: TextView
     private lateinit var uvDescription: TextView
+    private lateinit var refreshButton: ImageView
 
     private lateinit var presenter: UVPresenter
     private var dialog: ProgressDialog? = null
@@ -49,6 +46,10 @@ class MainActivity : AppCompatActivity(), UVView {
 
         this.presenter = UVPresenterImpl(LocationServiceImpl(LocationServices.getFusedLocationProviderClient(this), this), UVServiceImpl())
         this.presenter.setView(this)
+
+        this.refreshButton.setOnClickListener {
+            this.presenter.searchLocation()
+        }
     }
 
     private fun setupUI() {
@@ -58,6 +59,7 @@ class MainActivity : AppCompatActivity(), UVView {
         this.cityTextView = this.findViewById(R.id.city_textview)
         this.uvTextView = this.findViewById(R.id.uv_textview)
         this.uvDescription = this.findViewById(R.id.uv_description)
+        this.refreshButton = this.findViewById(R.id.refresh_button)
 
         this.cityTextView.text = "Ville -"
         this.uvTextView.text = "-"
