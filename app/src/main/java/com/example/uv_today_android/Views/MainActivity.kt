@@ -61,14 +61,18 @@ class MainActivity : AppCompatActivity(), UVView {
         this.uvDescription = this.findViewById(R.id.uv_description)
         this.refreshButton = this.findViewById(R.id.refresh_button)
 
-        this.cityTextView.text = "Ville -"
+        this.cityTextView.text = this.getString(R.string.city_label_default, "-")
         this.uvTextView.text = "-"
         this.uvDescription.text = ""
     }
 
     override fun onShowLoading() {
         this.dialog?.hide()
-        this.dialog = ProgressDialog.show(this, "Loading", "Retrieving your position")
+        this.dialog = ProgressDialog.show(
+            this,
+            this.getString(R.string.loading_title),
+            this.getString(R.string.loading_description)
+        )
     }
 
     override fun onHideLoading() {
@@ -76,11 +80,11 @@ class MainActivity : AppCompatActivity(), UVView {
     }
 
     override fun onUpdateLocationWithSuccess(cityName: String) {
-        this.cityTextView.text = "Ville : $cityName"
+        this.cityTextView.text = this.getString(R.string.city_label_default, cityName)
     }
 
     override fun onUpdateLocationWithError() {
-        Toast.makeText(this.applicationContext, "Could not retrieve your position", Toast.LENGTH_LONG).show()
+        Toast.makeText(this.applicationContext, this.getString(R.string.could_not_retrieve_position), Toast.LENGTH_LONG).show()
     }
 
     override fun onReceiveSuccess(index: Index) {
@@ -100,7 +104,7 @@ class MainActivity : AppCompatActivity(), UVView {
                 grantResults.isEmpty() -> Log.i("uv-today", "User interaction was cancelled.")
                 grantResults[0] == PackageManager.PERMISSION_GRANTED -> this.presenter.searchLocation()
                 else -> {
-                    Toast.makeText(this.applicationContext, "The permission to use your location was not given", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this.applicationContext, this.getString(R.string.position_not_allowed), Toast.LENGTH_LONG).show()
                     Log.e("uv-today", "User refused location")
                 }
             }
