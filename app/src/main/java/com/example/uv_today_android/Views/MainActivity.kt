@@ -58,6 +58,10 @@ class MainActivity : AppCompatActivity(), UVView {
         this.cityTextView = this.findViewById(R.id.city_textview)
         this.uvTextView = this.findViewById(R.id.uv_textview)
         this.uvDescription = this.findViewById(R.id.uv_description)
+
+        this.cityTextView.text = "Ville -"
+        this.uvTextView.text = "-"
+        this.uvDescription.text = ""
     }
 
     override fun onShowLoading() {
