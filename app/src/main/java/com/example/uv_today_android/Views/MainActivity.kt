@@ -23,6 +23,8 @@ import android.animation.ObjectAnimator
 import android.view.WindowManager
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import com.bugsnag.android.Bugsnag
+import com.example.uv_today_android.BuildConfig
 
 
 class MainActivity : AppCompatActivity(), UVView {
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity(), UVView {
 
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        this.setupBugsnag()
         this.setupUI()
 
         this.presenter = UVPresenterImpl(LocationServiceImpl(LocationServices.getFusedLocationProviderClient(this), this), UVServiceImpl())
@@ -50,6 +53,10 @@ class MainActivity : AppCompatActivity(), UVView {
         this.refreshButton.setOnClickListener {
             this.presenter.searchLocation()
         }
+    }
+
+    private fun setupBugsnag() {
+        Bugsnag.init(this.applicationContext, BuildConfig.BugsnagAPIKey)
     }
 
     private fun setupUI() {
