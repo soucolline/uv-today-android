@@ -19,12 +19,14 @@ android {
     buildTypes {
         debug {
             buildConfigField "String", "DarkSkyApiKey", SwiftUVAndroid_darkSkyApiKey
+            buildConfigField "String", "BugsnagAPIKey", SwiftUVAndroid_bugsnagApiKey
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "DarkSkyApiKey", SwiftUVAndroid_darkSkyApiKey
+            buildConfigField "String", "BugsnagAPIKey", SwiftUVAndroid_bugsnagApiKey
         }
     }
 }
@@ -39,6 +41,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.1'
+    implementation 'com.bugsnag:bugsnag-android:4.+'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
