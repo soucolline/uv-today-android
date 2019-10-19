@@ -1,4 +1,4 @@
-package com.example.uv_today_android.Views
+package com.zlatan.uv_today_android.Views
 
 import android.animation.ArgbEvaluator
 import android.app.ProgressDialog
@@ -9,22 +9,22 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.uv_today_android.Models.DataModel.Index
-import com.example.uv_today_android.Models.DataModel.getAssociatedColorFromContext
-import com.example.uv_today_android.Models.DataModel.getAssociatedDescriptionFromContext
-import com.example.uv_today_android.Presenters.UVPresenter
-import com.example.uv_today_android.Presenters.UVPresenterImpl
-import com.example.uv_today_android.Presenters.UVView
-import com.example.uv_today_android.R
-import com.example.uv_today_android.Services.LocationServiceImpl
-import com.example.uv_today_android.Services.UVServiceImpl
+import com.zlatan.uv_today_android.Models.DataModel.Index
+import com.zlatan.uv_today_android.Models.DataModel.getAssociatedColorFromContext
+import com.zlatan.uv_today_android.Models.DataModel.getAssociatedDescriptionFromContext
+import com.zlatan.uv_today_android.Presenters.UVPresenter
+import com.zlatan.uv_today_android.Presenters.UVPresenterImpl
+import com.zlatan.uv_today_android.Presenters.UVView
+import com.zlatan.uv_today_android.R
+import com.zlatan.uv_today_android.Services.LocationServiceImpl
+import com.zlatan.uv_today_android.Services.UVServiceImpl
 import com.google.android.gms.location.LocationServices
 import android.animation.ObjectAnimator
 import android.view.WindowManager
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import com.bugsnag.android.Bugsnag
-import com.example.uv_today_android.BuildConfig
+import com.zlatan.uv_today_android.BuildConfig
 
 
 class MainActivity : AppCompatActivity(), UVView {

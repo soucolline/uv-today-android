@@ -1,4 +1,4 @@
-package com.example.uv_today_android.Services
+package com.zlatan.uv_today_android.Services
 
 import android.Manifest
 import android.app.Activity
@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.location.Address
 import android.location.Geocoder
 import android.location.Location
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient

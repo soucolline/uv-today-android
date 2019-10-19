@@ -1,8 +1,8 @@
-package com.example.uv_today_android.Models.DataModel
+package com.zlatan.uv_today_android.Models.DataModel
 
 import android.content.Context
 import androidx.core.content.ContextCompat
-import com.example.uv_today_android.R
+import com.zlatan.uv_today_android.R
 
 
 typealias Index = Int

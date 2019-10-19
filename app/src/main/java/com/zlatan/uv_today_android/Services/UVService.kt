@@ -1,10 +1,10 @@
-package com.example.uv_today_android.Services
+package com.zlatan.uv_today_android.Services
 
 import android.location.Location
 import android.util.Log
-import com.example.uv_today_android.BuildConfig
-import com.example.uv_today_android.Models.DataModel.Index
-import com.example.uv_today_android.Models.DataModel.ServiceModels.ForecastObjectResponse
+import com.zlatan.uv_today_android.BuildConfig
+import com.zlatan.uv_today_android.Models.DataModel.Index
+import com.zlatan.uv_today_android.Models.DataModel.ServiceModels.ForecastObjectResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -1,6 +1,6 @@
-package com.example.uv_today_android.Services
+package com.zlatan.uv_today_android.Services
 
-import com.example.uv_today_android.Models.DataModel.ServiceModels.ForecastObjectResponse
+import com.zlatan.uv_today_android.Models.DataModel.ServiceModels.ForecastObjectResponse
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

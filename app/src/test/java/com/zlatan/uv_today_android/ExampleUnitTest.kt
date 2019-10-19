@@ -1,4 +1,4 @@
-package com.example.uv_today_android
+package com.zlatan.uv_today_android
 
 import org.junit.Test
 

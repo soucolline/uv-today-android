@@ -1,11 +1,11 @@
-package com.example.uv_today_android.Presenters
+package com.zlatan.uv_today_android.Presenters
 
 import android.location.Location
 import android.util.Log
-import com.example.uv_today_android.Models.DataModel.Index
-import com.example.uv_today_android.Services.LocationService
-import com.example.uv_today_android.Services.LocationServiceDelegate
-import com.example.uv_today_android.Services.UVService
+import com.zlatan.uv_today_android.Models.DataModel.Index
+import com.zlatan.uv_today_android.Services.LocationService
+import com.zlatan.uv_today_android.Services.LocationServiceDelegate
+import com.zlatan.uv_today_android.Services.UVService
 
 interface UVView {
     fun onShowLoading()
