@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UV Today</string>
+    <string name="city_label_default">Ville : %1$s</string>
+    <string name="could_not_retrieve_position">Impossible de vous localiser</string>
+    <string name="error_desc">Une erreur est survenue, veuillez relancer l\'application</string>
+    <string name="extreme_uv_desc">La peau non protégée sera endommagée et peut brûler en quelques minutes. Toute exposition au soleil est dangereuse, et en cas de sortie il faut se couvrir absolument (chapeau, lunettes de soleil, application d\'un écran solaire de très haute protection d\'indice + 50).</string>
+    <string name="high_uv_desc">Réduire l’exposition entre 11 h et 16 h. Appliquer un écran solaire de haute protection (indice de 30 à 50), porter un chapeau et des lunettes de soleil, et se placer à l’ombre.Réduire l’exposition entre 11 h et 16 h. Appliquer un écran solaire de haute protection (indice de 30 à 50), porter un chapeau et des lunettes de soleil, et se placer à l’ombre.</string>
+    <string name="loading_description">Téléchargement des données en cours</string>
+    <string name="loading_title">Veuillez patienter</string>
+    <string name="low_uv_desc">Port de lunettes de soleil en cas de journées ensoleillées.</string>
+    <string name="middle_uv_desc">Se couvrir et porter un chapeau et des lunettes de soleil. Appliquer un écran solaire de protection moyenne (indice de protection de 15 à 29), surtout pour une exposition à l’extérieur pendant plus de trente minutes. Rechercher l’ombre aux alentours de midi, quand le soleil est au zénith.</string>
+    <string name="position_not_allowed">Vous avez désactivé la location</string>
+    <string name="uv_description_default">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+    <string name="uv_label_default">0</string>
+    <string name="very_high_uv_desc">Sans protection, la peau sera endommagée et peut brûler. L’exposition au soleil peut être dangereuse entre 11 h et 16 h ; la recherche de l’ombre est donc importante. Sont recommandables le port de vêtements longs, d\'un chapeau et de lunettes de soleil, ainsi que l\'application d\'un écran solaire de très haute protection (indice + 50).</string>
+</resources>

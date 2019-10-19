@@ -1,3 +1,19 @@
 <resources>
-    <string name="app_name">uv-today-android</string>
+    <string name="app_name">UV Today</string>
+    <string name="city_label_default">City : %1$s</string>
+    <string name="uv_label_default">0</string>
+    <string name="uv_description_default">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+
+    <string name="loading_title">Loading</string>
+    <string name="loading_description">Retrieving your position</string>
+
+    <string name="could_not_retrieve_position">Could not retrieve your position</string>
+    <string name="position_not_allowed">The permission to use your location was not given</string>
+
+    <string name="low_uv_desc">Wear sunglasses on bright days. If you burn easily, cover up and use broad spectrum SPF 30+ sunscreen. Bright surfaces, such as sand, water and snow, will increase UV exposure.</string>
+    <string name="middle_uv_desc">Stay in shade near midday when the sun is strongest. If outdoors, wear sun protective clothing, a wide-brimmed hat, and UV-blocking sunglasses. Generously apply broad spectrum SPF 30+ sunscreen every 2 hours, even on cloudy days, and after swimming or sweating. Bright surfaces, such as sand, water and snow, will increase UV exposure.</string>
+    <string name="high_uv_desc">Reduce time in the sun between 10 a.m. and 4 p.m. If outdoors, seek shade and wear sun protective clothing, a wide-brimmed hat, and UV-blocking sunglasses. Generously apply broad spectrum SPF 30+ sunscreen every 2 hours, even on cloudy days, and after swimming or sweating. Bright surfaces, such sand, water and snow, will increase UV exposure.</string>
+    <string name="very_high_uv_desc">Minimize sun exposure between 10 a.m. and 4 p.m. If outdoors, seek shade and wear sun protective clothing, a wide-brimmed hat, and UV-blocking sunglasses. Generously apply broad spectrum SPF 30+ sunscreen every 2 hours, even on cloudy days, and after swimming or sweating. Bright surfaces, such as sand, water and snow, will increase UV exposure.</string>
+    <string name="extreme_uv_desc">Try to avoid sun exposure between 10 a.m. and 4 p.m. If outdoors, seek shade and wear sun protective clothing, a wide-brimmed hat, and UV-blocking sunglasses. Generously apply broad spectrum SPF 30+ sunscreen every 2 hours, even on cloudy days, and after swimming or sweating. Bright surfaces, such as sand, water and snow, will increase UV exposure.</string>
+    <string name="error_desc">An error occurred, please restart the app</string>
 </resources>
