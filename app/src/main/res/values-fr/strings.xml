@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">uv-today-android</string>
+    <string name="app_name">UV Today</string>
     <string name="city_label_default">Ville : %1$s</string>
     <string name="could_not_retrieve_position">Impossible de vous localiser</string>
     <string name="error_desc">Une erreur est survenue, veuillez relancer l\'application</string>
