@@ -60,7 +60,7 @@ class LocationServiceImpl(
         }
 
         if (addresses.isNotEmpty()) {
-            return addresses[0].locality
+            return addresses.first().locality ?: "Unknown"
         }
 
         return "Unknown"
