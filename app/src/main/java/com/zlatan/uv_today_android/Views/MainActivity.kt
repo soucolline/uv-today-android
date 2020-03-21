@@ -1,41 +1,31 @@
 package com.zlatan.uv_today_android.Views
 
+import android.Manifest
 import android.animation.ArgbEvaluator
+import android.animation.ObjectAnimator
 import android.app.ProgressDialog
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.TextView
+import android.view.WindowManager
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.bugsnag.android.Bugsnag
+import com.zlatan.uv_today_android.BuildConfig
 import com.zlatan.uv_today_android.Models.DataModel.Index
 import com.zlatan.uv_today_android.Models.DataModel.getAssociatedColorFromContext
 import com.zlatan.uv_today_android.Models.DataModel.getAssociatedDescriptionFromContext
 import com.zlatan.uv_today_android.Presenters.UVPresenter
-import com.zlatan.uv_today_android.Presenters.UVPresenterImpl
 import com.zlatan.uv_today_android.Presenters.UVView
 import com.zlatan.uv_today_android.R
-import com.zlatan.uv_today_android.Services.LocationServiceImpl
-import com.zlatan.uv_today_android.Services.UVServiceImpl
-import com.google.android.gms.location.LocationServices
-import android.animation.ObjectAnimator
-import android.view.WindowManager
-import android.widget.ImageView
-import androidx.core.content.ContextCompat
-import com.bugsnag.android.Bugsnag
-import com.zlatan.uv_today_android.BuildConfig
+import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.ext.android.inject
 
 
 class MainActivity : AppCompatActivity(), UVView {
 
-    private lateinit var backgroundView: ConstraintLayout
-    private lateinit var cityTextView: TextView
-    private lateinit var uvTextView: TextView
-    private lateinit var uvDescription: TextView
-    private lateinit var refreshButton: ImageView
-
-    private lateinit var presenter: UVPresenter
+    private val presenter: UVPresenter by inject()
     private var dialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +37,9 @@ class MainActivity : AppCompatActivity(), UVView {
         this.setupBugsnag()
         this.setupUI()
 
-        this.presenter = UVPresenterImpl(LocationServiceImpl(LocationServices.getFusedLocationProviderClient(this), this), UVServiceImpl())
-        this.presenter.setView(this)
+        this.presenter.attach(this)
+
+        this.searchLocation()
 
         this.refreshButton.setOnClickListener {
             this.presenter.searchLocation()
@@ -62,15 +53,15 @@ class MainActivity : AppCompatActivity(), UVView {
     private fun setupUI() {
         this.supportActionBar?.hide()
 
-        this.backgroundView = this.findViewById(R.id.background_view)
-        this.cityTextView = this.findViewById(R.id.city_textview)
-        this.uvTextView = this.findViewById(R.id.uv_textview)
-        this.uvDescription = this.findViewById(R.id.uv_description)
-        this.refreshButton = this.findViewById(R.id.refresh_button)
-
-        this.cityTextView.text = this.getString(R.string.city_label_default, "-")
-        this.uvTextView.text = "-"
+        this.cityTextview.text = this.getString(R.string.city_label_default, "-")
+        this.uvTextview.text = "-"
         this.uvDescription.text = ""
+    }
+
+    private fun searchLocation() {
+        if (ContextCompat.checkSelfPermission(this.applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            this.presenter.searchLocation()
+        }
     }
 
     override fun onShowLoading() {
@@ -87,7 +78,7 @@ class MainActivity : AppCompatActivity(), UVView {
     }
 
     override fun onUpdateLocationWithSuccess(cityName: String) {
-        this.cityTextView.text = this.getString(R.string.city_label_default, cityName)
+        this.cityTextview.text = this.getString(R.string.city_label_default, cityName)
     }
 
     override fun onUpdateLocationWithError() {
@@ -95,7 +86,7 @@ class MainActivity : AppCompatActivity(), UVView {
     }
 
     override fun onReceiveSuccess(index: Index) {
-        this.uvTextView.text = index.toString()
+        this.uvTextview.text = index.toString()
         this.uvDescription.text = index.getAssociatedDescriptionFromContext(this.applicationContext)
         this.animateBackgroundColorFromIndex(index)
     }

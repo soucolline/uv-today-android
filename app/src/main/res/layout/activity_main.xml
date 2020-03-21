@@ -2,14 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/background_view"
+    android:id="@+id/backgroundView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_background_default"
     tools:context=".Views.MainActivity">
 
     <TextView
-        android:id="@+id/city_textview"
+        android:id="@+id/cityTextview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/refresh_button"
+        android:id="@+id/refreshButton"
         android:layout_width="20sp"
         android:layout_height="20sp"
         android:layout_marginTop="30dp"
@@ -32,7 +32,7 @@
         app:srcCompat="@drawable/refresh" />
 
     <TextView
-        android:id="@+id/uv_textview"
+        android:id="@+id/uvTextview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
@@ -43,10 +43,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/city_textview" />
+        app:layout_constraintTop_toBottomOf="@+id/cityTextview" />
 
     <TextView
-        android:id="@+id/uv_description"
+        android:id="@+id/uvDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
