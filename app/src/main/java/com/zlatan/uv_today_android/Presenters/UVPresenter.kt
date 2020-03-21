@@ -19,7 +19,7 @@ interface UVView {
 }
 
 interface UVPresenter {
-    fun setView(view: UVView)
+    fun attach(view: UVView)
 
     fun searchLocation()
     fun getUVIndex()
@@ -33,10 +33,9 @@ class UVPresenterImpl(
     private var view: UVView? = null
     private var location: Location? = null
 
-    override fun setView(view: UVView) {
+    override fun attach(view: UVView) {
         this.view = view
         this.locationService.setDelegate(this)
-        this.searchLocation()
     }
 
     override fun searchLocation() {

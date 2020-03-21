@@ -1,30 +1,28 @@
 package com.zlatan.uv_today_android.Views
 
+import android.Manifest
 import android.animation.ArgbEvaluator
+import android.animation.ObjectAnimator
 import android.app.ProgressDialog
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import com.bugsnag.android.Bugsnag
+import com.zlatan.uv_today_android.BuildConfig
 import com.zlatan.uv_today_android.Models.DataModel.Index
 import com.zlatan.uv_today_android.Models.DataModel.getAssociatedColorFromContext
 import com.zlatan.uv_today_android.Models.DataModel.getAssociatedDescriptionFromContext
 import com.zlatan.uv_today_android.Presenters.UVPresenter
-import com.zlatan.uv_today_android.Presenters.UVPresenterImpl
 import com.zlatan.uv_today_android.Presenters.UVView
 import com.zlatan.uv_today_android.R
-import com.zlatan.uv_today_android.Services.LocationServiceImpl
-import com.zlatan.uv_today_android.Services.UVServiceImpl
-import com.google.android.gms.location.LocationServices
-import android.animation.ObjectAnimator
-import android.view.WindowManager
-import android.widget.ImageView
-import androidx.core.content.ContextCompat
-import com.bugsnag.android.Bugsnag
-import com.zlatan.uv_today_android.BuildConfig
+import org.koin.android.ext.android.inject
 
 
 class MainActivity : AppCompatActivity(), UVView {
@@ -35,7 +33,7 @@ class MainActivity : AppCompatActivity(), UVView {
     private lateinit var uvDescription: TextView
     private lateinit var refreshButton: ImageView
 
-    private lateinit var presenter: UVPresenter
+    private val presenter: UVPresenter by inject()
     private var dialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +45,9 @@ class MainActivity : AppCompatActivity(), UVView {
         this.setupBugsnag()
         this.setupUI()
 
-        this.presenter = UVPresenterImpl(LocationServiceImpl(LocationServices.getFusedLocationProviderClient(this), this), UVServiceImpl())
-        this.presenter.setView(this)
+        this.presenter.attach(this)
+
+        this.searchLocation()
 
         this.refreshButton.setOnClickListener {
             this.presenter.searchLocation()
@@ -71,6 +70,12 @@ class MainActivity : AppCompatActivity(), UVView {
         this.cityTextView.text = this.getString(R.string.city_label_default, "-")
         this.uvTextView.text = "-"
         this.uvDescription.text = ""
+    }
+
+    private fun searchLocation() {
+        if (ContextCompat.checkSelfPermission(this.applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            this.presenter.searchLocation()
+        }
     }
 
     override fun onShowLoading() {
