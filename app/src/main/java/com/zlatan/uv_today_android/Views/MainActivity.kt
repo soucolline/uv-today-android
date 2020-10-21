@@ -3,7 +3,7 @@ package com.zlatan.uv_today_android.Views
 import android.Manifest
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
-import android.app.ProgressDialog
+import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -19,21 +19,23 @@ import com.zlatan.uv_today_android.Models.DataModel.getAssociatedDescriptionFrom
 import com.zlatan.uv_today_android.Presenters.UVPresenter
 import com.zlatan.uv_today_android.Presenters.UVView
 import com.zlatan.uv_today_android.R
-import kotlinx.android.synthetic.main.activity_main.*
+import com.zlatan.uv_today_android.databinding.ActivityMainBinding
+import dmax.dialog.SpotsDialog
 import org.koin.android.ext.android.inject
-
 
 class MainActivity : AppCompatActivity(), UVView {
 
     private val presenter: UVPresenter by inject()
-    private var dialog: ProgressDialog? = null
+    private var dialog: AlertDialog? = null
+
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
 
+        this.setupBinding()
         this.setupBugsnag()
         this.setupUI()
 
@@ -41,7 +43,7 @@ class MainActivity : AppCompatActivity(), UVView {
 
         this.searchLocation()
 
-        this.refreshButton.setOnClickListener {
+        this.binding.refreshButton.setOnClickListener {
             this.presenter.searchLocation()
         }
     }
@@ -53,9 +55,15 @@ class MainActivity : AppCompatActivity(), UVView {
     private fun setupUI() {
         this.supportActionBar?.hide()
 
-        this.cityTextview.text = this.getString(R.string.city_label_default, "-")
-        this.uvTextview.text = "-"
-        this.uvDescription.text = ""
+        this.binding.cityTextview.text = this.getString(R.string.city_label_default, "-")
+        this.binding.uvTextview.text = "-"
+        this.binding.uvDescription.text = ""
+    }
+
+    private fun setupBinding() {
+        this.binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
     }
 
     private fun searchLocation() {
@@ -66,11 +74,11 @@ class MainActivity : AppCompatActivity(), UVView {
 
     override fun onShowLoading() {
         this.dialog?.hide()
-        this.dialog = ProgressDialog.show(
-            this,
-            this.getString(R.string.loading_title),
-            this.getString(R.string.loading_description)
-        )
+        this.dialog = SpotsDialog.Builder()
+            .setContext(this)
+            .setMessage(R.string.loading_description)
+            .build()
+            .apply { show() }
     }
 
     override fun onHideLoading() {
@@ -78,7 +86,7 @@ class MainActivity : AppCompatActivity(), UVView {
     }
 
     override fun onUpdateLocationWithSuccess(cityName: String) {
-        this.cityTextview.text = this.getString(R.string.city_label_default, cityName)
+        this.binding.cityTextview.text = this.getString(R.string.city_label_default, cityName)
     }
 
     override fun onUpdateLocationWithError() {
@@ -86,8 +94,8 @@ class MainActivity : AppCompatActivity(), UVView {
     }
 
     override fun onReceiveSuccess(index: Index) {
-        this.uvTextview.text = index.toString()
-        this.uvDescription.text = index.getAssociatedDescriptionFromContext(this.applicationContext)
+        this.binding.uvTextview.text = index.toString()
+        this.binding.uvDescription.text = index.getAssociatedDescriptionFromContext(this.applicationContext)
         this.animateBackgroundColorFromIndex(index)
     }
 
@@ -114,7 +122,7 @@ class MainActivity : AppCompatActivity(), UVView {
         val colorTo = index.getAssociatedColorFromContext(this.applicationContext)
         val duration = 1000
 
-        ObjectAnimator.ofObject(this.backgroundView, "backgroundColor", ArgbEvaluator(), colorFrom, colorTo)
+        ObjectAnimator.ofObject(this.binding.backgroundView, "backgroundColor", ArgbEvaluator(), colorFrom, colorTo)
             .setDuration(duration.toLong())
             .start()
     }
