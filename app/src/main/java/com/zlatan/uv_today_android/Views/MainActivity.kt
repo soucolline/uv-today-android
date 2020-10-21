@@ -3,7 +3,7 @@ package com.zlatan.uv_today_android.Views
 import android.Manifest
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator
-import android.app.ProgressDialog
+import android.app.AlertDialog
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -19,6 +19,7 @@ import com.zlatan.uv_today_android.Models.DataModel.getAssociatedDescriptionFrom
 import com.zlatan.uv_today_android.Presenters.UVPresenter
 import com.zlatan.uv_today_android.Presenters.UVView
 import com.zlatan.uv_today_android.R
+import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 
@@ -26,7 +27,7 @@ import org.koin.android.ext.android.inject
 class MainActivity : AppCompatActivity(), UVView {
 
     private val presenter: UVPresenter by inject()
-    private var dialog: ProgressDialog? = null
+    private var dialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,11 +67,11 @@ class MainActivity : AppCompatActivity(), UVView {
 
     override fun onShowLoading() {
         this.dialog?.hide()
-        this.dialog = ProgressDialog.show(
-            this,
-            this.getString(R.string.loading_title),
-            this.getString(R.string.loading_description)
-        )
+        this.dialog = SpotsDialog.Builder()
+            .setContext(this)
+            .setMessage(R.string.loading_description)
+            .build()
+            .apply { show() }
     }
 
     override fun onHideLoading() {
