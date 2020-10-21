@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+android.buildTypes.release.ndk.debugSymbolLevel = 'full'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -11,8 +13,8 @@ android {
         applicationId "com.zlatan.uv_today_android"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 5
+        versionName "1.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
