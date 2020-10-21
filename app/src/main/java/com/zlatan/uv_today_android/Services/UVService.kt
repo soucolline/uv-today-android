@@ -10,6 +10,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.math.roundToInt
 
 
 interface UVService {
@@ -20,12 +21,12 @@ class UVServiceImpl: UVService {
 
     override fun getUVIndex(location: Location, result: (Index) -> Unit, error: (String) -> Unit) {
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.darksky.net/")
+            .baseUrl("https://api.openweathermap.org/data/2.5/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         val service = retrofit.create(GetUVApi::class.java)
-        val call = service.getUVIndex(BuildConfig.DarkSkyApiKey, location.latitude, location.longitude)
+        val call = service.getUVIndex(BuildConfig.OpenWeatherApiKey, location.latitude, location.longitude)
 
         call.enqueue(object : Callback<ForecastObjectResponse> {
             override fun onFailure(call: Call<ForecastObjectResponse>, t: Throwable) {
@@ -34,8 +35,8 @@ class UVServiceImpl: UVService {
 
             override fun onResponse(call: Call<ForecastObjectResponse>, response: Response<ForecastObjectResponse>) {
                 response.body()?.let {
-                    Log.i("uv-today", "Retrieved uv Index successfully with : ${it.currently.uvIndex}")
-                    result(it.currently.uvIndex)
+                    Log.i("uv-today", "Retrieved uv Index successfully with : ${it.value}")
+                    result(it.value.roundToInt())
                 }
             }
         })

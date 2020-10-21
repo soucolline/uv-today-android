@@ -1,7 +1,12 @@
 package com.zlatan.uv_today_android.Models.DataModel.ServiceModels
 
-import com.zlatan.uv_today_android.Models.DataModel.Index
+import com.google.gson.annotations.SerializedName
 
-class ForecastObjectResponse(val currently: CurrentForecast)
-
-class CurrentForecast(val uvIndex: Index)
+data class ForecastObjectResponse(
+    val lat: Double,
+    val lon: Double,
+    @SerializedName("date_iso")
+    val dateIso: String,
+    val date: Int,
+    val value: Double
+)
