@@ -18,14 +18,14 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField "String", "DarkSkyApiKey", SwiftUVAndroid_darkSkyApiKey
+            buildConfigField "String", "OpenWeatherApiKey", SwiftUVAndroid_openWeatherApiKey
             buildConfigField "String", "BugsnagAPIKey", SwiftUVAndroid_bugsnagApiKey
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "DarkSkyApiKey", SwiftUVAndroid_darkSkyApiKey
+            buildConfigField "String", "OpenWeatherApiKey", SwiftUVAndroid_openWeatherApiKey
             buildConfigField "String", "BugsnagAPIKey", SwiftUVAndroid_bugsnagApiKey
         }
     }
