@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -21,12 +22,13 @@ import com.zlatan.uv_today_android.models.dataModel.getAssociatedColorFromContex
 import com.zlatan.uv_today_android.models.dataModel.getAssociatedDescriptionFromContext
 import com.zlatan.uv_today_android.viewModels.Resource
 import com.zlatan.uv_today_android.viewModels.UVViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import dmax.dialog.SpotsDialog
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel by viewModel<UVViewModel>()
+    private val viewModel: UVViewModel by viewModels()
     private var dialog: AlertDialog? = null
 
     private lateinit var binding: ActivityMainBinding

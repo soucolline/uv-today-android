@@ -9,13 +9,17 @@ import com.zlatan.uv_today_android.models.dataModel.Index
 import com.zlatan.uv_today_android.services.LocationService
 import com.zlatan.uv_today_android.services.LocationServiceDelegate
 import com.zlatan.uv_today_android.services.UVService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 sealed class Resource<out T> {
     data class Success<out T>(val data: T) : Resource<T>()
     data class Failure<out T>(val throwable: Throwable? = null) : Resource<T>()
 }
-class UVViewModel(
+
+@HiltViewModel
+class UVViewModel @Inject constructor(
     private val locationService: LocationService,
     private val uvService: UVService
 ): ViewModel(), LocationServiceDelegate {
