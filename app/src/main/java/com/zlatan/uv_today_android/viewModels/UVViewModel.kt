@@ -22,7 +22,6 @@ class UVViewModel(
     private val _index = MutableLiveData<Resource<Index>>()
     private val _showLoading = MutableLiveData<Boolean>()
     private val _city = MutableLiveData<Resource<String>>()
-    private val _errorFromLocationService = MutableLiveData<Unit>()
     val index: LiveData<Resource<Index>>
         get() = _index
     val showLoading: LiveData<Boolean>
@@ -67,6 +66,6 @@ class UVViewModel(
 
     override fun didFailUpdateLocation() {
         _showLoading.value = false
-        _errorFromLocationService.value = Unit
+        _city.value = Resource.Failure()
     }
 }

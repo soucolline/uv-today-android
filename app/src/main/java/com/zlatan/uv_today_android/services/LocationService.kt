@@ -1,5 +1,6 @@
 package com.zlatan.uv_today_android.services
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
@@ -29,6 +30,7 @@ class LocationServiceImpl(
         this.delegate = delegate
     }
 
+    @SuppressLint("MissingPermission")
     override fun retrieveLocation() {
         this.locationClient.lastLocation.addOnCompleteListener { task ->
             if (task.isSuccessful) {

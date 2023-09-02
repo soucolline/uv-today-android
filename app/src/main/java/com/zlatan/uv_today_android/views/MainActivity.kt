@@ -14,11 +14,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bugsnag.android.Bugsnag
 import com.zlatan.uv_today_android.BuildConfig
+import com.zlatan.uv_today_android.R
+import com.zlatan.uv_today_android.databinding.ActivityMainBinding
 import com.zlatan.uv_today_android.models.dataModel.Index
 import com.zlatan.uv_today_android.models.dataModel.getAssociatedColorFromContext
 import com.zlatan.uv_today_android.models.dataModel.getAssociatedDescriptionFromContext
-import com.zlatan.uv_today_android.R
-import com.zlatan.uv_today_android.databinding.ActivityMainBinding
 import com.zlatan.uv_today_android.viewModels.Resource
 import com.zlatan.uv_today_android.viewModels.UVViewModel
 import dmax.dialog.SpotsDialog
@@ -26,7 +26,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
-    val viewModel by viewModel<UVViewModel>()
+    private val viewModel by viewModel<UVViewModel>()
     private var dialog: AlertDialog? = null
 
     private lateinit var binding: ActivityMainBinding
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         this.setupBinding()
         this.setupBugsnag()

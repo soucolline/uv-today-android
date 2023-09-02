@@ -10,14 +10,4 @@ import org.koin.core.logger.Level
 
 class UVApplication: Application() {
 
-    override fun onCreate() {
-        super.onCreate()
-
-        startKoin {
-            androidLogger(Level.ERROR)
-            androidContext(this@UVApplication)
-            modules(serviceModule, presenterModule)
-        }
-    }
-
 }

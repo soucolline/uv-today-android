@@ -7,7 +7,6 @@
     <string name="extreme_uv_desc">La peau non protégée sera endommagée et peut brûler en quelques minutes. Toute exposition au soleil est dangereuse, et en cas de sortie il faut se couvrir absolument (chapeau, lunettes de soleil, application d\'un écran solaire de très haute protection d\'indice + 50).</string>
     <string name="high_uv_desc">Réduire l’exposition entre 11 h et 16 h. Appliquer un écran solaire de haute protection (indice de 30 à 50), porter un chapeau et des lunettes de soleil, et se placer à l’ombre.Réduire l’exposition entre 11 h et 16 h. Appliquer un écran solaire de haute protection (indice de 30 à 50), porter un chapeau et des lunettes de soleil, et se placer à l’ombre.</string>
     <string name="loading_description">Téléchargement des données en cours</string>
-    <string name="loading_title">Veuillez patienter</string>
     <string name="low_uv_desc">Port de lunettes de soleil en cas de journées ensoleillées.</string>
     <string name="middle_uv_desc">Se couvrir et porter un chapeau et des lunettes de soleil. Appliquer un écran solaire de protection moyenne (indice de protection de 15 à 29), surtout pour une exposition à l’extérieur pendant plus de trente minutes. Rechercher l’ombre aux alentours de midi, quand le soleil est au zénith.</string>
     <string name="position_not_allowed">Vous avez désactivé la location</string>
