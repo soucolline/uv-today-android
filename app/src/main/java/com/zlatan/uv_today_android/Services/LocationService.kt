@@ -46,7 +46,7 @@ class LocationServiceImpl(
         val addresses: List<Address>
 
         try {
-            addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+            addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)?.toList() ?: emptyList()
         } catch (ioException: IOException) {
             return "Unknown"
         }

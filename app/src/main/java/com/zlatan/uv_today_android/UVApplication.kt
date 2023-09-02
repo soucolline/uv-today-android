@@ -6,6 +6,7 @@ import com.zlatan.uv_today_android.di.serviceModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 class UVApplication: Application() {
 
@@ -13,7 +14,7 @@ class UVApplication: Application() {
         super.onCreate()
 
         startKoin {
-            androidLogger()
+            androidLogger(Level.ERROR)
             androidContext(this@UVApplication)
             modules(serviceModule, presenterModule)
         }

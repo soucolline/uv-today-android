@@ -1,5 +1,4 @@
 package com.zlatan.uv_today_android.Presenters
-
 import android.location.Location
 import android.util.Log
 import com.zlatan.uv_today_android.Models.DataModel.Index
@@ -67,5 +66,4 @@ class UVPresenterImpl(
         this.view?.onHideLoading()
         this.view?.onUpdateLocationWithError()
     }
-
 }

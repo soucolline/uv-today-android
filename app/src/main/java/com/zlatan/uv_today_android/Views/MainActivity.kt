@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bugsnag.android.Bugsnag
 import com.zlatan.uv_today_android.BuildConfig
@@ -69,6 +70,13 @@ class MainActivity : AppCompatActivity(), UVView {
     private fun searchLocation() {
         if (ContextCompat.checkSelfPermission(this.applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             this.presenter.searchLocation()
+        } else {
+            val permissions = arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+            val requestCode = LOCATION_PERMISSION_CODE
+            ActivityCompat.requestPermissions(this, permissions, requestCode)
         }
     }
 
@@ -105,7 +113,8 @@ class MainActivity : AppCompatActivity(), UVView {
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>,
                                             grantResults: IntArray) {
-        if (requestCode == 1) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_CODE) {
             when {
                 grantResults.isEmpty() -> Log.i("uv-today", "User interaction was cancelled.")
                 grantResults[0] == PackageManager.PERMISSION_GRANTED -> this.presenter.searchLocation()
@@ -125,5 +134,9 @@ class MainActivity : AppCompatActivity(), UVView {
         ObjectAnimator.ofObject(this.binding.backgroundView, "backgroundColor", ArgbEvaluator(), colorFrom, colorTo)
             .setDuration(duration.toLong())
             .start()
+    }
+
+    companion object {
+        const val LOCATION_PERMISSION_CODE = 123
     }
 }
