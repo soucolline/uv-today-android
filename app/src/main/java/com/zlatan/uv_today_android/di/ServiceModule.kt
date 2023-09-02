@@ -1,10 +1,10 @@
 package com.zlatan.uv_today_android.di
 
 import com.google.android.gms.location.LocationServices
-import com.zlatan.uv_today_android.Services.LocationService
-import com.zlatan.uv_today_android.Services.LocationServiceImpl
-import com.zlatan.uv_today_android.Services.UVService
-import com.zlatan.uv_today_android.Services.UVServiceImpl
+import com.zlatan.uv_today_android.services.LocationService
+import com.zlatan.uv_today_android.services.LocationServiceImpl
+import com.zlatan.uv_today_android.services.UVService
+import com.zlatan.uv_today_android.services.UVServiceImpl
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 

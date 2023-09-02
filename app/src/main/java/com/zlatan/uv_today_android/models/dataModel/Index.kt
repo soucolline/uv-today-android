@@ -1,4 +1,4 @@
-package com.zlatan.uv_today_android.Models.DataModel
+package com.zlatan.uv_today_android.models.dataModel
 
 import android.content.Context
 import androidx.core.content.ContextCompat

@@ -1,4 +1,4 @@
-package com.zlatan.uv_today_android.Services
+package com.zlatan.uv_today_android.services
 
 import android.content.Context
 import android.location.Address

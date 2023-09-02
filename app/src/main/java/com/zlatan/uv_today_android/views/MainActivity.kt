@@ -1,4 +1,4 @@
-package com.zlatan.uv_today_android.Views
+package com.zlatan.uv_today_android.views
 
 import android.Manifest
 import android.animation.ArgbEvaluator
@@ -14,19 +14,19 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bugsnag.android.Bugsnag
 import com.zlatan.uv_today_android.BuildConfig
-import com.zlatan.uv_today_android.Models.DataModel.Index
-import com.zlatan.uv_today_android.Models.DataModel.getAssociatedColorFromContext
-import com.zlatan.uv_today_android.Models.DataModel.getAssociatedDescriptionFromContext
-import com.zlatan.uv_today_android.Presenters.UVPresenter
-import com.zlatan.uv_today_android.Presenters.UVView
+import com.zlatan.uv_today_android.models.dataModel.Index
+import com.zlatan.uv_today_android.models.dataModel.getAssociatedColorFromContext
+import com.zlatan.uv_today_android.models.dataModel.getAssociatedDescriptionFromContext
 import com.zlatan.uv_today_android.R
 import com.zlatan.uv_today_android.databinding.ActivityMainBinding
+import com.zlatan.uv_today_android.viewModels.Resource
+import com.zlatan.uv_today_android.viewModels.UVViewModel
 import dmax.dialog.SpotsDialog
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(), UVView {
+class MainActivity : AppCompatActivity() {
 
-    private val presenter: UVPresenter by inject()
+    val viewModel by viewModel<UVViewModel>()
     private var dialog: AlertDialog? = null
 
     private lateinit var binding: ActivityMainBinding
@@ -40,12 +40,32 @@ class MainActivity : AppCompatActivity(), UVView {
         this.setupBugsnag()
         this.setupUI()
 
-        this.presenter.attach(this)
+        viewModel.attach()
 
         this.searchLocation()
 
         this.binding.refreshButton.setOnClickListener {
-            this.presenter.searchLocation()
+            this.viewModel.searchLocation()
+        }
+
+        viewModel.index.observe(this) { state ->
+            when (state) {
+                is Resource.Failure -> onReceiveError(state.throwable?.localizedMessage ?: "")
+                is Resource.Success -> {
+                    onReceiveSuccess(state.data)
+                }
+            }
+        }
+
+        viewModel.showLoading.observe(this) { shouldShow ->
+            if (shouldShow) onShowLoading() else onHideLoading()
+        }
+
+        viewModel.city.observe(this) { state ->
+            when(state) {
+                is Resource.Failure -> onUpdateLocationWithError()
+                is Resource.Success -> onUpdateLocationWithSuccess(state.data)
+            }
         }
     }
 
@@ -69,7 +89,7 @@ class MainActivity : AppCompatActivity(), UVView {
 
     private fun searchLocation() {
         if (ContextCompat.checkSelfPermission(this.applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            this.presenter.searchLocation()
+            viewModel.searchLocation()
         } else {
             val permissions = arrayOf(
                     Manifest.permission.ACCESS_FINE_LOCATION,
@@ -80,7 +100,7 @@ class MainActivity : AppCompatActivity(), UVView {
         }
     }
 
-    override fun onShowLoading() {
+    private fun onShowLoading() {
         this.dialog?.hide()
         this.dialog = SpotsDialog.Builder()
             .setContext(this)
@@ -89,25 +109,25 @@ class MainActivity : AppCompatActivity(), UVView {
             .apply { show() }
     }
 
-    override fun onHideLoading() {
+    private fun onHideLoading() {
         this.dialog?.hide()
     }
 
-    override fun onUpdateLocationWithSuccess(cityName: String) {
+    private fun onUpdateLocationWithSuccess(cityName: String) {
         this.binding.cityTextview.text = this.getString(R.string.city_label_default, cityName)
     }
 
-    override fun onUpdateLocationWithError() {
+    private fun onUpdateLocationWithError() {
         Toast.makeText(this.applicationContext, this.getString(R.string.could_not_retrieve_position), Toast.LENGTH_LONG).show()
     }
 
-    override fun onReceiveSuccess(index: Index) {
+    private fun onReceiveSuccess(index: Index) {
         this.binding.uvTextview.text = index.toString()
         this.binding.uvDescription.text = index.getAssociatedDescriptionFromContext(this.applicationContext)
         this.animateBackgroundColorFromIndex(index)
     }
 
-    override fun onReceiveError(error: String) {
+    private fun onReceiveError(error: String) {
         Toast.makeText(this.applicationContext, error, Toast.LENGTH_LONG).show()
     }
 
@@ -117,7 +137,7 @@ class MainActivity : AppCompatActivity(), UVView {
         if (requestCode == LOCATION_PERMISSION_CODE) {
             when {
                 grantResults.isEmpty() -> Log.i("uv-today", "User interaction was cancelled.")
-                grantResults[0] == PackageManager.PERMISSION_GRANTED -> this.presenter.searchLocation()
+                grantResults[0] == PackageManager.PERMISSION_GRANTED -> viewModel.searchLocation()
                 else -> {
                     Toast.makeText(this.applicationContext, this.getString(R.string.position_not_allowed), Toast.LENGTH_LONG).show()
                     Log.e("uv-today", "User refused location")
