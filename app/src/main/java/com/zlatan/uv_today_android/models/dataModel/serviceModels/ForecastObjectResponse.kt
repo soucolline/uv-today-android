@@ -1,4 +1,4 @@
-package com.zlatan.uv_today_android.Models.DataModel.ServiceModels
+package com.zlatan.uv_today_android.models.dataModel.serviceModels
 
 import com.google.gson.annotations.SerializedName
 

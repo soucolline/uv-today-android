@@ -1,8 +1,8 @@
 package com.zlatan.uv_today_android
 
 import androidx.test.platform.app.InstrumentationRegistry
-import com.zlatan.uv_today_android.Models.DataModel.getAssociatedColorFromContext
-import com.zlatan.uv_today_android.Models.DataModel.getAssociatedDescriptionFromContext
+import com.zlatan.uv_today_android.models.dataModel.getAssociatedColorFromContext
+import com.zlatan.uv_today_android.models.dataModel.getAssociatedDescriptionFromContext
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
