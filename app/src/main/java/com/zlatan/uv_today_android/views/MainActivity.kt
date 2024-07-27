@@ -13,8 +13,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.bugsnag.android.Bugsnag
-import com.zlatan.uv_today_android.BuildConfig
 import com.zlatan.uv_today_android.R
 import com.zlatan.uv_today_android.databinding.ActivityMainBinding
 import com.zlatan.uv_today_android.models.dataModel.Index
@@ -39,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         this.setupBinding()
-        this.setupBugsnag()
         this.setupUI()
 
         viewModel.attach()
@@ -69,10 +66,6 @@ class MainActivity : AppCompatActivity() {
                 is Resource.Success -> onUpdateLocationWithSuccess(state.data)
             }
         }
-    }
-
-    private fun setupBugsnag() {
-        Bugsnag.init(this.applicationContext, BuildConfig.BugsnagAPIKey)
     }
 
     private fun setupUI() {
